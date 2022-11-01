@@ -1,0 +1,5 @@
+
+gpython:S1192"JDefine a constant instead of duplicating this literal 'home.html' 3 times.(Ú“½™üÿÿÿÿ
+qpython:S3776"TRefactor this function to reduce its Cognitive Complexity from 20 to the 15 allowed.(¸ÿ½ÿÿÿÿÿ
+Hpython:S5806D"+Rename this variable; it shadows a builtin.( ü­¯ûÿÿÿÿ
+Gpython:S1172N"/Remove the unused function parameter "request".(«îÇ³

@@ -1,0 +1,109 @@
+<!doctype html>
+{% load static %}
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image To PDF</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/cover.css' %}" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/pdf.png' %}" type="image">
+
+</head>
+<body class="d-flex h-100 text-center text-white bg-dark">
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="mb-auto">
+        <div>
+            <h3 class="float-md-start mb-0">Img To PDF</h3>
+            <nav class="nav nav-masthead justify-content-center float-md-end text-left">
+                <a class="nav-link active" aria-current="page" href="{% url 'convert' %} " %}">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+        <main class="px-3 mt-5">
+            <h1>Convert images to PDF</h1>
+            <p class="lead">Upload files in the formats: IMG, JPG, JPEG, HEIC and you will receive a single pdf file
+                with
+                all images</p>
+            <p class="lead">
+
+
+            <form enctype="multipart/form-data" class="file-form" method="post" action="{% url 'convert' %}">
+                {% csrf_token %}
+
+                <div class="upload-btn-wrapper">
+                    <button
+                            class="btn">
+                        <i class="fa fa-check" aria-hidden="true"></i> Select Files
+                        <input type="file" id="upload" name="myfile" multiple/>
+                    </button>
+                </div>
+
+                <div class="upload-btn-wrapper">
+                    <button type="submit"
+                            class="btn" onclick="loading()">
+                        <i class="fa fa-check" aria-hidden="true"></i> Upload
+                    </button>
+                </div>
+
+            </form>
+            </p>
+
+            <div class="row">
+                <p class="lead num-files">
+                    {% if extensions_error %}Only img, jpg, jpeg, heic files!{% endif %}
+                    {% if no_files_selected %}No Files Selected{% endif %}
+                    {% if cyrillic %}Files whose names contain Cyrillic letters are not supported{% endif %}
+
+                </p>
+            </div>
+
+            <div class="container">
+                {% if success %}
+                <a href="{% url 'download' %}" download onclick="style.display = 'none'"
+                   class="btn">Download</a>
+                {% endif %}
+            </div>
+
+            <p class="lead num-files"></p>
+            <div class="loading"></div>
+
+
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p>Developed By <a class="text-white"
+                               href="https://www.linkedin.com/in/ihor-yukhnovskyi-37a227253/">IhorYu</a>.
+            </p>
+        </footer>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script>
+        function loading() {
+            document.querySelector('.loading').innerHTML = ('' +
+                '<div class="ring">Loading\n' +
+                '<span></span>\n' +
+                '</div>');
+        }
+    </script>
+    <script>
+        $('#upload').on('change', function () {
+            document.querySelector('.num-files').innerHTML = (this.files.length + ' files selected');
+            console.log(this.files.length);
+        });
+    </script>
+
+</body>
+</html>
